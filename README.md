@@ -102,7 +102,7 @@ PostSchema.plugin(crate, {
             blur: '5x10'
 ```
 
-For more information on available transforms, see the [ImageMagick website](http://www.imagemagick.org/script/command-line-options.php).
+For more information on available transforms, see the [GraphicsMagick website](http://www.graphicsmagick.org/convert.html).
 
 ### Changing the destination format
 
