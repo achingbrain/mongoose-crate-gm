@@ -1,7 +1,7 @@
 {
   "author": "Alex Potsides",
-  "name": "mongoose-crate-imagemagick",
-  "description": "Perform imagemagick transformations on image files",
+  "name": "mongoose-crate-gm",
+  "description": "Perform GraphicMagick transformations on image files",
   "keywords": [
     "mongoose",
     "uploads",
@@ -11,14 +11,14 @@
     "graphicsmagick"
   ],
   "version": "0.0.0",
-  "homepage": "https://github.com/achingbrain/mongoose-crate-imagemagick",
+  "homepage": "https://github.com/achingbrain/mongoose-crate-gm",
   "repository": {
     "type": "git",
-    "url": "git://github.com/achingbrain/mongoose-crate-imagemagick.git"
+    "url": "git://github.com/achingbrain/mongoose-crate-gm.git"
   },
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha",
+    "test": "istanbul cover _mocha",
     "coveralls": "istanbul cover _mocha && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {

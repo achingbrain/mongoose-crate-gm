@@ -1,22 +1,22 @@
-# mongoose-crate-imagemagick
+# mongoose-crate-gm
 
-[![Dependency Status](https://david-dm.org/achingbrain/mongoose-crate-imagemagick.svg?theme=shields.io)](https://david-dm.org/achingbrain/mongoose-crate-imagemagick) [![devDependency Status](https://david-dm.org/achingbrain/mongoose-crate-imagemagick/dev-status.svg?theme=shields.io)](https://david-dm.org/achingbrainmongoose-crate-imagemagick#info=devDependencies) [![Build Status](https://img.shields.io/travis/achingbrain/mongoose-crate-imagemagick/master.svg)](https://travis-ci.org/achingbrain/mongoose-crate-imagemagick) [![Coverage Status](http://img.shields.io/coveralls/achingbrain/mongoose-crate-imagemagick/master.svg)](https://coveralls.io/r/achingbrain/mongoose-crate-imagemagick)
+[![Dependency Status](https://david-dm.org/achingbrain/mongoose-crate-gm.svg?theme=shields.io)](https://david-dm.org/achingbrain/mongoose-crate-gm) [![devDependency Status](https://david-dm.org/achingbrain/mongoose-crate-gm/dev-status.svg?theme=shields.io)](https://david-dm.org/achingbrainmongoose-crate-gm#info=devDependencies) [![Build Status](https://img.shields.io/travis/achingbrain/mongoose-crate-gm/master.svg)](https://travis-ci.org/achingbrain/mongoose-crate-gm) [![Coverage Status](http://img.shields.io/coveralls/achingbrain/mongoose-crate-gm/master.svg)](https://coveralls.io/r/achingbrain/mongoose-crate-gm)
 
-A [mongoose-crate](https://github.com/achingbrain/mongoose-crate) FileProcessor that applies image transformations with [ImageMagick](http://www.imagemagick.org).
+A [mongoose-crate](https://github.com/achingbrain/mongoose-crate) FileProcessor that applies image transformations with [GraphicsMagick](http://www.graphicsmagick.org) via the [`gm`](http://npmjs.org/package/gm) module.
 
 ## Prequisites
 
-A modern version of ImageMagick installed and available on the path.  You may also need GhostScript, I did on one computer but not on another.  YMMV.
+A modern version of GraphicsMagic or ImageMagick installed and available on the path.  You may also need GhostScript, I did on one computer but not on another.  YMMV.
 
 ## Usage
 
-You can pass images through one or more ImageMagick filters:
+You can pass images through one or more filters:
 
 ```javascript
 var mongoose = require('mongoose'),
   crate = require('mongoose-crate'),
   LocalFS = require('mongoose-crate-localfs'),
-  ImageMagick = require('mongoose-crate-imagemagick')
+  GraphicsMagic = require('mongoose-crate-gm')
 
 var PostSchema = new mongoose.Schema({
   title: String,
@@ -29,7 +29,7 @@ PostSchema.plugin(crate, {
   }),
   fields: {
     image: {
-      processor: new ImageMagick({
+      processor: new GraphicsMagic({
         tmpDir: '/tmp', // Where transformed files are placed before storage, defaults to os.tmpdir()
         formats: ['JPEG', 'GIF', 'PNG'], // Supported formats, defaults to ['JPEG', 'GIF', 'PNG', 'TIFF']
         transforms: {
@@ -66,7 +66,7 @@ post.attach('image', {path: '/path/to/image'}, function(error) {
 
 ## Meta data
 
-`mongoose-crate-imagemagick` extends the basic meta data added by `mongoose-crate` to add some image specific fields.  It provides the following for each transformation:
+`mongoose-crate-gm` extends the basic meta data added by `mongoose-crate` to add some image specific fields.  It provides the following for each transformation:
 
 ```javascript
 {
@@ -80,13 +80,13 @@ post.attach('image', {path: '/path/to/image'}, function(error) {
 }
 ```
 
-## ImageMagick transformations
+## Transformations
 
-Transformations are achieved by invoking the **convert** command from ImageMagick and passing all the properties of the transform as arguments.
+Transformations are achieved by invoking the **convert** command and passing all the properties of the transform as arguments.
 
 Example in convert command:
 
-    convert source.png -crop 120x120 -blur 5x10 output.png
+    gm convert source.png -crop 120x120 -blur 5x10 output.png
 
 Example in plugin options:
 
@@ -95,7 +95,7 @@ PostSchema.plugin(crate, {
   ...
   fields: {
     image: {
-      processor: new ImageMagick({
+      processor: new GraphicsMagic({
         transforms: {
           small: {
             crop: '120x120',
@@ -113,7 +113,7 @@ PostSchema.plugin(crate, {
   ...
   fields: {
     image: {
-      processor: new ImageMagick({
+      processor: new GraphicsMagic({
         transforms: {
           as_jpeg: {
             format: 'jpg'
@@ -130,12 +130,25 @@ PostSchema.plugin(crate, {
   ...
   fields: {
     image: {
-      processor: new ImageMagick({
+      processor: new GraphicsMagic({
         formats: ['JPEG', 'GIF', 'PNG']
 ```
 
-The values should match up with `convert`'s supported formats.  To see a list of all formats supported by your ImageMagick install, run:
+The values should match up with `convert`'s supported formats.  To see a list of all formats supported by your install, run:
 
 ```
-convert -list format
+gm convert -list format
+```
+
+### Using ImageMagick instead of GraphicsMagic
+
+By default the `gm` module uses the GraphicsMagic binary. If you wish to use ImageMagick instead, pass true for the `imageMagick` option:
+
+```javascript
+PostSchema.plugin(crate, {
+  ...
+  fields: {
+    image: {
+      processor: new GraphicsMagic({
+        imageMagick: true
 ```
