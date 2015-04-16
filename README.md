@@ -6,7 +6,7 @@ A [mongoose-crate](https://github.com/achingbrain/mongoose-crate) FileProcessor 
 
 ## Prequisites
 
-A modern version of GraphicsMagic or ImageMagick installed and available on the path.  You may also need GhostScript, I did on one computer but not on another.  YMMV.
+A modern version of GraphicsMagic installed and available on the path.
 
 ## Usage
 
@@ -142,7 +142,7 @@ gm convert -list format
 
 ### Using ImageMagick instead of GraphicsMagic
 
-By default the `gm` module uses the GraphicsMagic binary. If you wish to use ImageMagick instead, pass true for the `imageMagick` option:
+By default the `gm` module uses the GraphicsMagic binary. If you wish to use ImageMagick instead, first install a recent version of ImageMagick on your system and add it to your path, then pass true for the `imageMagick` option:
 
 ```javascript
 PostSchema.plugin(crate, {
