@@ -102,6 +102,8 @@ PostSchema.plugin(crate, {
             blur: '5x10'
 ```
 
+You can add the `auto-orient` parameter by just adding it to the transforms object as: `autoOrient: true`. Note: it doesn't cares about the parameter value, if it's present it means it's active.
+
 For more information on available transforms, see the [GraphicsMagick website](http://www.graphicsmagick.org/convert.html).
 
 ### Changing the destination format
