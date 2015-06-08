@@ -1,7 +1,8 @@
 var should = require('should'),
   path = require('path'),
   sinon = require('sinon'),
-  ImageMagick = require('../lib/ImageMagick')
+  ImageMagick = require('../lib/ImageMagick'),
+  ExifImage = require('exif').ExifImage
 
 describe('ImageMagick', function() {
 
@@ -127,6 +128,98 @@ describe('ImageMagick', function() {
       model.smaller.type.should.equal('image/jpeg')
 
       done()
+    })
+  })
+
+  // image from https://github.com/recurser/exif-orientation-examples/
+  it('should auto-orient a landscape jpg', function(done) {
+    var processor = new ImageMagick({
+      transforms: {
+        smaller: {
+          'resize': '400x400',
+          'format': 'jpg',
+          'auto-orient': true
+        }
+      }
+    })
+
+    var file = path.resolve(__dirname + '/./fixtures/landscape.jpg')
+    var storageProvider = {
+      save: function(path, callback) {
+        callback(null, path)
+      }
+    }
+
+    var model = {
+      id: 'model_id',
+      smaller: {}
+    }
+
+    new ExifImage({ image : file }, function (error, exif) {
+      should(error).not.ok
+      exif.image.Orientation.should.equal(6)
+
+      processor.process({
+        path: file,
+        mimeType: 'image/jpeg',
+        name: 'landscape.jpg'
+      }, storageProvider, model, function(error) {
+        new ExifImage({ image : model.smaller.url.path }, function (error, exif) {
+          should(error).not.ok
+          exif.image.Orientation.should.equal(6)
+
+          model.smaller.width.should.equal(400)
+          model.smaller.height.should.equal(300)
+
+          done()
+        })
+      })
+    })
+  })
+
+  // image from https://github.com/recurser/exif-orientation-examples/
+  it('should auto-orient a portrait jpg', function(done) {
+    var processor = new ImageMagick({
+      transforms: {
+        smaller: {
+          'resize': '400x400',
+          'format': 'jpg',
+          'auto-orient': true
+        }
+      }
+    })
+
+    var file = path.resolve(__dirname + '/./fixtures/portrait.jpg')
+    var storageProvider = {
+      save: function(path, callback) {
+        callback(null, path)
+      }
+    }
+
+    var model = {
+      id: 'model_id',
+      smaller: {}
+    }
+
+    new ExifImage({ image : file }, function (error, exif) {
+      should(error).not.ok
+      exif.image.Orientation.should.equal(6)
+
+      processor.process({
+        path: file,
+        mimeType: 'image/jpeg',
+        name: 'portrait.jpg'
+      }, storageProvider, model, function(error) {
+        new ExifImage({ image : model.smaller.url.path }, function (error, exif) {
+          should(error).not.ok
+          exif.image.Orientation.should.equal(6)
+
+          model.smaller.width.should.equal(300)
+          model.smaller.height.should.equal(400)
+
+          done()
+        })
+      })
     })
   })
 

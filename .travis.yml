@@ -4,5 +4,7 @@ node_js:
   - "0.12"
   - "iojs"
 before_install:
+  - sudo add-apt-repository ppa:rwky/graphicsmagick -y
+  - sudo apt-get update
   - sudo apt-get install graphicsmagick
 after_script: npm run coveralls
