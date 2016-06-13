@@ -13,12 +13,12 @@ A modern version of GraphicsMagic installed and available on the path.
 You can pass images through one or more filters:
 
 ```javascript
-var mongoose = require('mongoose'),
-  crate = require('mongoose-crate'),
-  LocalFS = require('mongoose-crate-localfs'),
-  GraphicsMagic = require('mongoose-crate-gm')
+const mongoose = require('mongoose')
+const crate = require('mongoose-crate')
+const LocalFS = require('mongoose-crate-localfs')
+const GraphicsMagic = require('mongoose-crate-gm')
 
-var PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
   title: String,
   description: String
 })
@@ -50,14 +50,14 @@ PostSchema.plugin(crate, {
   }
 })
 
-var Post = mongoose.model('Post', PostSchema)
+const Post = mongoose.model('Post', PostSchema)
 ```
 
 .. then later:
 
 ```javascript
-var post = new Post()
-post.attach('image', {path: '/path/to/image'}, function(error) {
+const post = new Post()
+post.attach('image', {path: '/path/to/image'}, (error) => {
   // image is now attached and post.image is populated e.g.:
   // post.image.small.url
   // post.image.medium.url

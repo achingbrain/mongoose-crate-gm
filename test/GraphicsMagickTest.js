@@ -3,17 +3,17 @@
 const should = require('should')
 const path = require('path')
 const sinon = require('sinon')
-const ImageMagick = require('../')
+const GraphicsMagick = require('../')
 const describe = require('mocha').describe
 const it = require('mocha').it
 
-describe('ImageMagick', () => {
+describe('GraphicsMagick', () => {
   it('should object strenuously if options are not specified', () => {
-    (() => new ImageMagick()).should.throw()
+    (() => new GraphicsMagick()).should.throw()
   })
 
   it('should throw if creating the temp dir fails', () => {
-    (() => new ImageMagick({
+    (() => new GraphicsMagick({
       tmpDir: 5,
       transforms: {
         original: {
@@ -24,7 +24,7 @@ describe('ImageMagick', () => {
   })
 
   it('should override formats', () => {
-    const im = new ImageMagick({
+    const im = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -37,7 +37,7 @@ describe('ImageMagick', () => {
   })
 
   it('should process a png', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -81,7 +81,7 @@ describe('ImageMagick', () => {
   })
 
   it('should pass an error to the callback when asked to process an unsupported format', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -112,7 +112,7 @@ describe('ImageMagick', () => {
   })
 
   it('should pass an error to the callback when we pass invalid options to convert', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
           'foo': ['bar', 'baz']
@@ -143,7 +143,7 @@ describe('ImageMagick', () => {
   })
 
   it('should not process text file', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -160,7 +160,7 @@ describe('ImageMagick', () => {
   })
 
   it('should extend field schema', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -178,7 +178,7 @@ describe('ImageMagick', () => {
   })
 
   it('should transform a png', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         smaller: {
           'resize': '100x34',
@@ -216,7 +216,7 @@ describe('ImageMagick', () => {
   })
 
   it('should remove all transforms', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -247,7 +247,7 @@ describe('ImageMagick', () => {
   })
 
   it('should not remove transforms with no URL', (done) => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -279,7 +279,7 @@ describe('ImageMagick', () => {
   })
 
   it('should say we will overwrite transforms', () => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -301,7 +301,7 @@ describe('ImageMagick', () => {
   })
 
   it('should say we will not overwrite transforms without URLs', () => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
@@ -323,7 +323,7 @@ describe('ImageMagick', () => {
   })
 
   it('should support passing an array of args to convert', () => {
-    const processor = new ImageMagick({
+    const processor = new GraphicsMagick({
       transforms: {
         original: {
 
