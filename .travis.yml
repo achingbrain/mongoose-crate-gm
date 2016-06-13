@@ -13,5 +13,7 @@ addons:
     packages:
     - g++-4.8
     - gcc-4.8
+before_install:
+  - sudo apt-get install graphicsmagick
 script: npm run test:coverage:check
 after_script: npm run coveralls
