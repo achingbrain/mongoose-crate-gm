@@ -27,7 +27,7 @@
   "dependencies": {
     "async": "^2.1.4",
     "check-types": "^7.0.0",
-    "gm": "^1.17.0",
+    "gm": "^1.23.0",
     "mkdirp": "^0.5",
     "mmmagic": "^0.4.4",
     "mongoose-crate": "^1.0.0"
